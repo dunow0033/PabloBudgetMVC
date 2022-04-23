@@ -1,34 +1,21 @@
-﻿@model IEnumerable<Budget.Mvc.Controllers.TransactionTest>
-<table class="table" id="showtable">
-    <tr><td>Id</td><td>ImageName</td><td>Image</td></tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Id</td>
-            <td><button id="viewbtn">View Image</button></td>
-        </tr>
-    }
-</table>
-<div id="showmodal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+﻿@model Budget.Mvc.Models.ViewModels.TransactionViewModel
 
+<button id="addCategoryBtn">Add Category</button>
+
+
+<div id="addCategoryModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <partial name="_addTransaction" />
     </div>
 </div>
 
 @section scripts{
     <script>
-        $("#showtable").on("click", "#viewbtn", function () {
-            var id = $(this).closest("tr").find("td").eq(0).html();
-            console.log('clicked')
-            $.ajax({
-                url: "@Url.Action("AddTransaction", "Home")",
-                data: { id: id },
-                success: function (data) {
-                    console.log(data)
-                    $("#showmodal .modal-dialog").html(data);
-                    $("#showmodal").modal("show");
-                }
-            });
+        $("#addCategoryBtn").on("click", function () {
+            console.log('clicked');
+            $("#addCategoryModal").modal("show");
         });
+            // $("#addCategoryModal").modal("show");
+
     </script>
 }

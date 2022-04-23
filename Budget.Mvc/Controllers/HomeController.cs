@@ -14,12 +14,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var list = new List<TransactionTest>
-        {
-            new TransactionTest { Id = 1 },
-            new TransactionTest { Id = 2}
-        };
-        return View(list);
+         return View();
     }
 
     public IActionResult AddTransaction(int id)
