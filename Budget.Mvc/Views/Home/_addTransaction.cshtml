@@ -1,7 +1,8 @@
 ﻿@model Budget.Mvc.Models.ViewModels.TransactionViewModel
-<div class="modal-content">
-    <h4>Add Sleep</h4>
-    <form asp-action="Insert" id="form-action" method="post" class="form-horizontal" role="form">
+<div id="addCategoryModal" class="modal-content">
+    <div id="addCategoryForm">
+        <h4>Add Sleep</h4>
+
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <div class="row justify-content-center">
@@ -14,10 +15,17 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10 mt-3 mb-5">
-                <input type="submit" id="form-button" class="btn btn-success" value="Add Todo" />
+                <button type="button" id="form-button" class="btn btn-success">Add Category</button>
             </div>
         </div>
-
-    </form>
+    </div>
+    
+    <div id="addCategoryModalSuccess" class="modal-content-success d-none">
+        <h4>Category Successfully Added</h4>
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10 mt-3 mb-5">
+                <button type="button" id="closeCategoryModalBtn" class="btn btn-primary">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
-

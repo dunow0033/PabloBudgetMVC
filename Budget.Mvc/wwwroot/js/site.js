@@ -1,5 +1,30 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$("#form-button").click(function () {
+    var name = $("#Name").val();
+    var modalSuccess = $("#addCategoryModalSuccess");
+    var modalForm = $("#addCategoryForm")
+    console.log(name);
 
-// Write your JavaScript code.
+    $.ajax({
+        url: 'Home/AddCategory',
+        type: 'POST',
+        data: {
+            name: name
+        },
+        dataType: 'json',
+        success: function (response) {
+            modalSuccess.removeClass("d-none");
+            modalForm.addClass("d-none");
+        },
+        failure: function (response) {
+            alert('failure');
+        },
+        error: function (response) {
+            alert('error');
+        }
+    });
 
+});
+
+$("#closeCategoryModalBtn").click(function () {
+    $("#addCategoryModal").modal("hide");
+});

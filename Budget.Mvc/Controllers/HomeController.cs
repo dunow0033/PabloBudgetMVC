@@ -1,4 +1,5 @@
-﻿using System.Transactions;
+﻿using System.Net.Mime;
+using System.Transactions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Budget.Mvc.Controllers;
@@ -17,17 +18,10 @@ public class HomeController : Controller
          return View();
     }
 
-    public IActionResult AddTransaction(int id)
+    [HttpPost]
+    public IActionResult AddCategory(string name)
     {
-        var list = new List<TransactionTest>
-        {
-            new TransactionTest { Id = 1 },
-            new TransactionTest { Id = 2 }
-        };
-
-        var model = list.Where(m => m.Id == id).FirstOrDefault();
-
-        return PartialView("_addTransaction", model);
+        return Json(new { Response = "Ok" });
     }
 }
 
