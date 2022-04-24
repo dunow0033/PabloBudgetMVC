@@ -33,7 +33,7 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult AddCategory(string name)
     {
-        return Json(new { Response = "Ok" });
+        return RedirectToAction("Index");
     }
 
     [HttpPost]
@@ -41,7 +41,7 @@ public class HomeController : Controller
     {
         _budgetRepository.AddCategory(model.Category.Name);
 
-        return Json(new { Response = "Ok" });
+        return RedirectToAction("Index");
     }
 
     [HttpPost]
@@ -49,6 +49,7 @@ public class HomeController : Controller
     {
         var transaction = new Transaction
         {
+            Id = model.Id,
             Amount = model.Amount,
             Name = model.Name,
             Date = model.Date,
@@ -56,9 +57,14 @@ public class HomeController : Controller
             CategoryId = model.CategoryId
         };
 
-        _budgetRepository.AddTransaction(transaction);
+        if (transaction.Id > 0)
+            _budgetRepository.UpdateTransaction(transaction);
+        else
+            _budgetRepository.AddTransaction(transaction);
 
-        return Json(new { Response = "Ok" });
+
+
+        return RedirectToAction("Index");
     }
 
     [HttpPost]
@@ -68,7 +74,7 @@ public class HomeController : Controller
 
        _budgetRepository.DeleteTransaction(id);
 
-        return Json(new { Response = "Ok" });
+        return RedirectToAction("Index");
     }
 
     //public ActionResult PrepareTransactionForm()

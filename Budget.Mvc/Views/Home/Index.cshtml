@@ -73,11 +73,11 @@
                 @transaction.TransactionType
             </td>
             <td>
-                <button id="deleteTransactionBtn" type="button" class="btn btn-danger">
+                <button type="button" class="btn btn-danger deleteTransactionBtn">
                     Delete
                 </button>
 
-                <button id="updateTransactionBtn" type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary updateTransactionBtn">
                     Edit
                 </button>
             </td>
@@ -114,13 +114,13 @@
               $("#addTransactionModal").modal("show");
         });
 
-        $("#deleteTransactionBtn").on("click", function () {
+        $(".deleteTransactionBtn").on("click", function () {
             var id = $(this).closest('tr').find('td:first').html();
             $('#deleteTransactionForm').append(`<input type="hidden" name="id" value="${id}">`);
             $("#deleteCategoryModal").modal("show");
         });
 
-        $("#updateTransactionBtn").on("click", function () {
+        $(".updateTransactionBtn").on("click", function () {
             var id = $(this).closest('tr').find('td:first').html();
             var date = $(this).closest('tr').find('td:eq(1)').html();
             var amount = $(this).closest('tr').find('td:eq(2)').html();
@@ -130,11 +130,12 @@
 
             console.log(`everything: ${id}, ${date}, ${amount}, ${name}, ${categoryId}, ${transactionType}`);
 
+            console.log('to-sendo-clicado-porra');
+
             $('#insert-transaction-form #Id').val($.trim(id));
-            $('#insert-transaction-form #Name').val($.trim(date));
+            $('#insert-transaction-form #Date').val($.trim(date));
             $('#insert-transaction-form #Amount').val($.trim(amount));
             $('#insert-transaction-form #Name').val($.trim(name));
-            @*$('#insert-transaction-form #CategoryId').val($.trim(categoryId));*@
             $(`#insert-transaction-form #CategoryId option[value=${categoryId}]`).attr('selected', 'selected');
             $('#insert-transaction-form #TransactionType').find(`option:contains('${$.trim(transactionType)}')`).attr('selected', 'selected');
 
