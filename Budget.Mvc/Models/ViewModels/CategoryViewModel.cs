@@ -1,12 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Budget.Mvc.Models
+namespace Budget.Mvc.Models.ViewModels
 {
-	public class Category
+	public class CategoryViewModel
 	{
 		public int Id { get; set; }
-		[Required(ErrorMessage ="Serio?")]
+
+		[Required]
 		public string Name { get; set; }
 	}
 }

@@ -1,11 +1,27 @@
 ﻿@model Budget.Mvc.Models.ViewModels.TransactionViewModel
 
+<button id="addTransactionBtn">Add Transaction</button>
 <button id="addCategoryBtn">Add Category</button>
 
+<button id="addCategoryMvcBtn">Add Category MVC</button>
 
-<div id="addCategoryModal" class="modal fade" tabindex="-1" role="dialog">
+@*<div id="addCategoryModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <partial name="_addTransaction" />
+    </div>
+</div>*@
+
+
+<div id="addCategoryMvcModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <partial name="InsertCategory" />
+    </div>
+</div>
+
+
+<div id="addTransactionModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <partial name="InsertTransaction" />
     </div>
 </div>
 
@@ -15,7 +31,22 @@
             console.log('clicked1');
             $("#addCategoryModal").modal("show");
         });
-            // $("#addCategoryModal").modal("show");
 
+        $("#addCategoryMvcBtn").on("click", function () {
+            console.log('clicked8');
+            $("#addCategoryMvcModal").modal("show");
+        });
+
+        $("#addTransactionBtn").on("click", function () {
+            $.ajax({
+                url: "@Url.Action("PrepareTransactionForm", "Home")",
+                success: function (data) {
+                    $("#addTransactionModal .modal-dialog").html(data);
+                    $("#addTransactionModal").modal("show");
+                }
+            });
+        });
+
+                
     </script>
 }
