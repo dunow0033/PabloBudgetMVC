@@ -18,13 +18,13 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        var transactions = _budgetRepository.GetTransactions();
+        var categories = _budgetRepository.GetCategories();
+
         var model = new TransactionViewModel
         {
-            Categories = new List<Category>
-            {
-                new Category { Id = 1, Name ="Groceries"},
-                new Category { Id = 1, Name ="Fuel"}
-            }
+            Categories = categories,
+            Transactions = transactions
         };
 
         return View(model);

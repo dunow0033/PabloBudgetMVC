@@ -1,6 +1,6 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using Budget.Mvc.Models;
+using Budget.Mvc.Models.DTOs;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
@@ -10,6 +10,8 @@ namespace Budget.Mvc.Repositories
     {
 		void AddCategory(string name);
         void AddTransaction(Transaction transaction);
+        List<TransactionWithCategory> GetTransactions();
+        List<Category> GetCategories();
     }
 	public class BudgetRepository: IBudgetRepository
 	{
@@ -49,6 +51,34 @@ namespace Budget.Mvc.Repositories
             catch (Exception ex)
             {
                 // do something;
+            }
+        }
+
+        public List<Category> GetCategories()
+        {
+            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+            {
+                var query = @"SELECT * FROM Category";
+
+                var categories = connection.Query<Category>(query).ToList();
+
+                return categories;
+            }
+        }
+
+        public List<TransactionWithCategory> GetTransactions()
+        {
+            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+            {
+                var query =
+                    @"SELECT t.Amount, t.CategoryId, t.[Date], t.Id, t.TransactionType, t.Name, c.Name AS Category
+                      FROM Transactions AS t
+                      LEFT JOIN Category AS c
+                      ON t.CategoryId = c.Id;";
+
+                var allTransactions = connection.Query<TransactionWithCategory>(query);
+
+                return allTransactions.ToList();
             }
         }
     }

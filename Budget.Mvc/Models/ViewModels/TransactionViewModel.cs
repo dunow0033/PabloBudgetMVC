@@ -1,6 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
+﻿using System.ComponentModel.DataAnnotations;
+using Budget.Mvc.Models.DTOs;
 
 namespace Budget.Mvc.Models.ViewModels
 {
@@ -24,6 +23,8 @@ namespace Budget.Mvc.Models.ViewModels
         public TransactionType TransactionType { get; set; }
 
         public List<Category>? Categories { get; set; }
+
+        public List<TransactionWithCategory>? Transactions { get; set; }
 
         public Category Category { get; set;  }
     }
