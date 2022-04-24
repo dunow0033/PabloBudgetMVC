@@ -9,6 +9,8 @@ namespace Budget.Mvc.Models
         public int Id { get; set; }
         public string Date { get; set; }
         public string Amount { get; set; }
+
+        [Required]
         public string Name { get; set; }
         public int CategoryId { get; set; }
         public TransactionType TransactionType { get; set; }

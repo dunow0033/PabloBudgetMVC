@@ -1,15 +1,15 @@
 ﻿@model Budget.Mvc.Models.ViewModels.TransactionViewModel
-<div id="addCategoryModal" class="modal-content">
-    <div id="addCategoryForm">
-        <h4>Add Transaction</h4>
 
+<div class="modal-content">
+
+    <form asp-action="InsertTransaction" id="form-action" method="post" class="form-horizontal" role="form">
         <input asp-for="Id" type="hidden" class="form-control" />
 
         <div class="row justify-content-center">
             <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10">
                 <label asp-for="Date" class="form-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
+                <input type="Date" asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
             </div>
         </div>
 
@@ -33,36 +33,37 @@
             <label asp-for="CategoryId" class="control-label"></label>
             <select asp-for="CategoryId" class="form-control">
                 <option>Select Category</option>
-                    @foreach (var category in Model.Categories)
-                    {
-                        <option value="@category.Id">@category.Name</option>
-                    }    
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
             </select>
             <span asp-validation-for="CategoryId" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="TransactionType" asp-items="Html.GetEnumSelectList<TransactionType>()" class="control-label"></label>
+            <label asp-for="TransactionType" class="control-label"></label>
+            <select asp-for="TransactionType" asp-items="Html.GetEnumSelectList<TransactionType>()" class="form-control"></select>
             <span asp-validation-for="TransactionType" class="text-danger"></span>
         </div>
 
+
         <div class="row justify-content-center">
             <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10 mt-3 mb-5">
-                <button type="button" id="form-button" class="btn btn-success">Add Category</button>
+                <button type="submit" id="form-button" class="btn btn-success">Add Category</button>
             </div>
         </div>
-    </div>
+    </form>
+</div>
 
-    <div id="addCategoryModalSuccess" class="modal-content-success d-none">
+
+
+@*<div id="addCategoryModalSuccess" class="modal-content-success d-none">
         <h4>Category Successfully Added</h4>
         <div class="row justify-content-center">
             <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10 mt-3 mb-5">
                 <button type="button" id="closeCategoryModalBtn" class="btn btn-primary">Close</button>
             </div>
         </div>
-    </div>
-</div>
+    </div>*@
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

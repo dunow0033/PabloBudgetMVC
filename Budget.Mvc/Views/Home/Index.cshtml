@@ -43,10 +43,21 @@
                 success: function (data) {
                     $("#addTransactionModal .modal-dialog").html(data);
                     $("#addTransactionModal").modal("show");
+
+                    $("form").removeData("validator");
+                    $("form").removeData("unobtrusiveValidation");
+                    $.validator.unobtrusive.parse("form");
                 }
             });
         });
 
+        @*$("#addTransactionBtn").on("click", function () {
+           
+                    $("#addTransactionModal").modal("show");
                 
+            });*@
+       
+
+
     </script>
 }

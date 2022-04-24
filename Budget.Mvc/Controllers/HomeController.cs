@@ -44,6 +44,23 @@ public class HomeController : Controller
         return Json(new { Response = "Ok" });
     }
 
+    [HttpPost]
+    public IActionResult InsertTransaction(TransactionViewModel model)
+    {
+        var transaction = new Transaction
+        {
+            Amount = model.Amount,
+            Name = model.Name,
+            Date = model.Date,
+            TransactionType = model.TransactionType,
+            CategoryId = model.CategoryId
+        };
+
+        _budgetRepository.AddTransaction(transaction);
+
+        return Json(new { Response = "Ok" });
+    }
+
     public ActionResult PrepareTransactionForm()
     {
         var model = new TransactionViewModel
