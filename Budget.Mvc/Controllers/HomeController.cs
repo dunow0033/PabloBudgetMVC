@@ -61,6 +61,16 @@ public class HomeController : Controller
         return Json(new { Response = "Ok" });
     }
 
+    [HttpPost]
+    public IActionResult DeleteTransaction(int id)
+    {
+       
+
+       _budgetRepository.DeleteTransaction(id);
+
+        return Json(new { Response = "Ok" });
+    }
+
     public ActionResult PrepareTransactionForm()
     {
         var model = new TransactionViewModel

@@ -8,10 +8,14 @@ namespace Budget.Mvc.Repositories
 {
 	public interface IBudgetRepository
     {
-		void AddCategory(string name);
-        void AddTransaction(Transaction transaction);
-        List<TransactionWithCategory> GetTransactions();
         List<Category> GetCategories();
+        void AddCategory(string name);
+        
+        List<TransactionWithCategory> GetTransactions();
+        void AddTransaction(Transaction transaction);
+        void DeleteTransaction(int id);
+      
+        
     }
 	public class BudgetRepository: IBudgetRepository
 	{
@@ -46,6 +50,22 @@ namespace Budget.Mvc.Repositories
                 {
                     var sql = "INSERT INTO Transactions(Name, Date, TransactionType, CategoryId ) Values(@Name, @Date, @TransactionType, @CategoryId )";
                     connection.Execute(sql, transaction );
+                }
+            }
+            catch (Exception ex)
+            {
+                // do something;
+            }
+        }
+
+        public void DeleteTransaction(int id)
+        {
+            try
+            {
+                using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+                {
+                    var sql = "DELETE FROM Transactions WHERE Id = @id";
+                    connection.Execute(sql, new { id });
                 }
             }
             catch (Exception ex)

@@ -105,7 +105,7 @@
         });
 
         $("#deleteTransactionBtn").on("click", function () {
-            var id = $(this).closest('tr').find('td:first').text()
+            var id = $(this).closest('tr').find('td:first').html();
             $('#deleteTransactionForm').append(`<input type="hidden" name="id" value="${id}">`);
             $("#deleteCategoryModal").modal("show", {id: id});
         });
