@@ -27,6 +27,7 @@ namespace Budget.Mvc.Models.ViewModels
         public List<TransactionWithCategory>? Transactions { get; set; }
 
         public Category Category { get; set;  }
+        public Transaction Transaction { get; set; }
     }
 }
 

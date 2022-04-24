@@ -23,8 +23,8 @@ public class HomeController : Controller
 
         var model = new TransactionViewModel
         {
-            Categories = categories,
-            Transactions = transactions
+            Transactions = transactions,
+            Categories = categories
         };
 
         return View(model);
@@ -71,18 +71,10 @@ public class HomeController : Controller
         return Json(new { Response = "Ok" });
     }
 
-    public ActionResult PrepareTransactionForm()
-    {
-        var model = new TransactionViewModel
-        {
-            Categories = new List<Category>
-            {
-                new Category { Id = 1, Name ="Groceries"},
-                new Category { Id = 1, Name ="Fuel"}
-            }
-        };
-        return PartialView("InsertTransaction", model);
-    }
+    //public ActionResult PrepareTransactionForm()
+    //{   
+    //    return PartialView("InsertTransaction", model);
+    //}
 }
 
 public class TransactionTest

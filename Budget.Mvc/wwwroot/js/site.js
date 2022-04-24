@@ -1,4 +1,4 @@
-﻿$("#form-button").click(function () {
+﻿$("#AddCategoryBtn").click(function () {
     var name = $("#Name").val();
     var modalSuccess = $("#addCategoryModalSuccess");
     var modalForm = $("#addCategoryForm")
