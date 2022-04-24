@@ -22,7 +22,6 @@
             alert('error');
         }
     });
-
 });
 
 $("#closeCategoryModalBtn").click(function () {
