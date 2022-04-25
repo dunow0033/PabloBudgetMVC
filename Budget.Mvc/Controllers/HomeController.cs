@@ -1,4 +1,5 @@
-﻿using Budget.Mvc.Models;
+﻿using System.Globalization;
+using Budget.Mvc.Models;
 using Budget.Mvc.Models.DTOs;
 using Budget.Mvc.Models.ViewModels;
 using Budget.Mvc.Repositories;
@@ -19,11 +20,27 @@ public class HomeController : Controller
 
     public IActionResult Index(TransactionViewModel? model)
     {
-        var transactions = new List<TransactionWithCategory>();
+        var startDate = DateTime.Parse("2022-03-04");
+
+        var transactions = _budgetRepository.GetTransactions();
         if (model.SearchParameters == null)
-            transactions = _budgetRepository.GetTransactions();
-        else 
-            transactions = _budgetRepository.GetTransactions().Where(x => x.CategoryId == model.SearchParameters.CategoryId).ToList();
+            transactions = transactions.ToList();
+
+        else if ((model.SearchParameters.CategoryId != 0 && model.SearchParameters.StartDate == null))
+            transactions = transactions
+                .Where(x => x.CategoryId == model.SearchParameters.CategoryId)
+                .ToList();
+
+        else if ((model.SearchParameters.CategoryId == 0 && model.SearchParameters.StartDate != null))
+            transactions = transactions
+                .Where(x => DateTime.Parse(x.Date) >= DateTime.Parse(model.SearchParameters.StartDate) && DateTime.Parse(x.Date) <= DateTime.Parse(model.SearchParameters.EndDate))
+                .ToList();
+
+        else if ((model.SearchParameters.CategoryId != 0 && model.SearchParameters.StartDate != null))
+            transactions = transactions
+                     .Where(x => DateTime.Parse(x.Date) >= DateTime.Parse(model.SearchParameters.StartDate) && DateTime.Parse(x.Date) <= DateTime.Parse(model.SearchParameters.EndDate) && x.CategoryId == model.SearchParameters.CategoryId)
+                     .ToList();
+
 
         var categories = _budgetRepository.GetCategories();
 

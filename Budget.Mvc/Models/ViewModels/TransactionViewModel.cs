@@ -35,6 +35,8 @@ namespace Budget.Mvc.Models.ViewModels
     public class SearchParameters
     {
         public int CategoryId { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
     }
 }
 

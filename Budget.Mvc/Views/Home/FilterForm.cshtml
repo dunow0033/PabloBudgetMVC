@@ -16,6 +16,22 @@
         </div>
 
         <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10">
+                <label asp-for="SearchParameters.StartDate" class="form-label"></label>
+                <input type="Date" asp-for="SearchParameters.StartDate" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10">
+                <label asp-for="SearchParameters.EndDate" class="form-label"></label>
+                <input type="Date" asp-for="SearchParameters.EndDate" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
             <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10 mt-3 mb-5">
                 <button type="submit" id="form-button" class="btn btn-success">Filter</button>
             </div>
