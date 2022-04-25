@@ -19,9 +19,15 @@
     </div>
 </div>
 
-<div id="deleteCategoryModal" class="modal fade" tabindex="-1" role="dialog">
+<div id="deleteTransactionModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <partial name="DeleteTransaction" />
+    </div>
+</div>
+
+<div id="deleteCategoryModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <partial name="DeleteCategory" />
     </div>
 </div>
 
@@ -110,7 +116,7 @@
                 </td>
               
                 <td>
-                    <button type="button" class="btn btn-danger deleteTransactionBtn">
+                    <button type="button" class="btn btn-danger deleteCategoryBtn">
                         Delete
                     </button>
 
@@ -154,6 +160,12 @@
         $(".deleteTransactionBtn").on("click", function () {
             var id = $(this).closest('tr').find('td:first').html();
             $('#deleteTransactionForm').append(`<input type="hidden" name="id" value="${id}">`);
+            $("#deleteTransactionModal").modal("show");
+        });
+
+        $(".deleteCategoryBtn").on("click", function () {
+            var id = $(this).closest('tr').find('td:first').html();
+            $('#deleteCategoryForm').append(`<input type="hidden" name="id" value="${id}">`);
             $("#deleteCategoryModal").modal("show");
         });
 
@@ -164,10 +176,6 @@
             var name = $(this).closest('tr').find('td:eq(3)').html();
             var categoryId = $(this).closest('tr').find('td:eq(5)').html();
             var transactionType = $(this).closest('tr').find('td:eq(6)').html();
-
-            console.log(`everything: ${id}, ${date}, ${amount}, ${name}, ${categoryId}, ${transactionType}`);
-
-            console.log('to-sendo-clicado-porra');
 
             $('#insert-transaction-form #Id').val($.trim(id));
             $('#insert-transaction-form #Date').val($.trim(date));

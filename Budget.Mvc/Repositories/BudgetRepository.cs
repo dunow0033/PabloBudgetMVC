@@ -10,7 +10,8 @@ namespace Budget.Mvc.Repositories
     {
         List<Category> GetCategories();
         void AddCategory(string name);
-        
+        void DeleteCategory(int id);
+
         List<TransactionWithCategory> GetTransactions();
         void AddTransaction(Transaction transaction);
         void DeleteTransaction(int id);
@@ -66,6 +67,22 @@ namespace Budget.Mvc.Repositories
                 using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
                 {
                     var sql = "DELETE FROM Transactions WHERE Id = @id";
+                    connection.Execute(sql, new { id });
+                }
+            }
+            catch (Exception ex)
+            {
+                // do something;
+            }
+        }
+
+        public void DeleteCategory(int id)
+        {
+            try
+            {
+                using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+                {
+                    var sql = "DELETE FROM Category WHERE Id = @id";
                     connection.Execute(sql, new { id });
                 }
             }

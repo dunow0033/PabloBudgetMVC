@@ -71,8 +71,15 @@ public class HomeController : Controller
     public IActionResult DeleteTransaction(int id)
     {
        
-
        _budgetRepository.DeleteTransaction(id);
+
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult DeleteCategory(int id)
+    {
+
+        _budgetRepository.DeleteCategory(id);
 
         return RedirectToAction("Index");
     }
