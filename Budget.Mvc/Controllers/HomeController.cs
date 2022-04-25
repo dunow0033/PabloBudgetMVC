@@ -31,15 +31,12 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult AddCategory(string name)
-    {
-        return RedirectToAction("Index");
-    }
-
-    [HttpPost]
     public IActionResult InsertCategory(TransactionViewModel model)
     {
-        _budgetRepository.AddCategory(model.Category.Name);
+        if (model.Category.Id > 0)
+            _budgetRepository.UpdateCategory(model.Category.Name, model.Category.Id);
+        else
+            _budgetRepository.AddCategory(model.Category.Name);
 
         return RedirectToAction("Index");
     }
@@ -62,12 +59,9 @@ public class HomeController : Controller
         else
             _budgetRepository.AddTransaction(transaction);
 
-
-
         return RedirectToAction("Index");
     }
 
-    [HttpPost]
     public IActionResult DeleteTransaction(int id)
     {
        
@@ -83,14 +77,4 @@ public class HomeController : Controller
 
         return RedirectToAction("Index");
     }
-
-    //public ActionResult PrepareTransactionForm()
-    //{   
-    //    return PartialView("InsertTransaction", model);
-    //}
-}
-
-public class TransactionTest
-{
-    public int Id { get; set; }
 }

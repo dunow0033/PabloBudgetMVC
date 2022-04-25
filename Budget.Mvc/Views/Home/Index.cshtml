@@ -6,12 +6,11 @@
 <button id="backToTransactionsBtn" class="d-none">Back To Transactions List</button>
 
 
-<div id="addCategoryMvcModal" class="modal fade" tabindex="-1" role="dialog">
+<div id="addCategoryModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <partial name="InsertCategory" />
     </div>
 </div>
-
 
 <div id="addTransactionModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -120,7 +119,7 @@
                         Delete
                     </button>
 
-                    <button type="button" class="btn btn-primary updateTransactionBtn">
+                    <button type="button" class="btn btn-primary updateCategoryBtn">
                         Edit
                     </button>
                 </td>
@@ -135,25 +134,11 @@
             $("#addCategoryModal").modal("show");
         });
 
-        $("#addCategoryMvcBtn").on("click", function () {
-            $("#addCategoryMvcModal").modal("show");
+        $("#addCategoryBtn").on("click", function () {
+            $("#addCategoryModal").modal("show");
         });
 
-        @*$("#addTransactionBtn").on("click", function () {
-            $.ajax({
-                url: "@Url.Action("PrepareTransactionForm", "Home")",
-                success: function (data) {
-                    $("#addTransactionModal .modal-dialog").html(data);
-                    $("#addTransactionModal").modal("show");
-
-                    $("form").removeData("validator");
-                    $("form").removeData("unobtrusiveValidation");
-                    $.validator.unobtrusive.parse("form");
-                }
-            });
-        });*@
-
-          $("#addTransactionBtn").on("click", function () {
+        $("#addTransactionBtn").on("click", function () {
               $("#addTransactionModal").modal("show");
         });
 
@@ -185,6 +170,18 @@
             $('#insert-transaction-form #TransactionType').find(`option:contains('${$.trim(transactionType)}')`).attr('selected', 'selected');
 
             $("#addTransactionModal").modal("show");
+        });
+
+        $(".updateCategoryBtn").on("click", function () {
+            var id = $(this).closest('tr').find('td:first').html();
+            var name = $(this).closest('tr').find('td:eq(1)').html();
+
+            console.log(name);
+
+            $('#insert-category-form #Category_Id').val($.trim(id));
+            $('#insert-category-form #Category_Name').val($.trim(name));
+
+            $("#addCategoryModal").modal("show");
         });
 
         $("#manageCategoriesBtn").on("click", function () {

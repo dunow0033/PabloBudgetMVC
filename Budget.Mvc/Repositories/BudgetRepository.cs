@@ -11,6 +11,7 @@ namespace Budget.Mvc.Repositories
         List<Category> GetCategories();
         void AddCategory(string name);
         void DeleteCategory(int id);
+        void UpdateCategory(string name, int id);
 
         List<TransactionWithCategory> GetTransactions();
         void AddTransaction(Transaction transaction);
@@ -132,6 +133,24 @@ namespace Budget.Mvc.Repositories
                           WHERE Id = @Id";
 
                     connection.Execute(sql, transaction );
+                }
+            }
+            catch (Exception ex)
+            {
+                // do something;
+            }
+        }
+
+        public void UpdateCategory(string name, int id)
+        {
+            try
+            {
+                using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+                {
+                    var sql =
+                        "UPDATE Category SET Name = @Name WHERE Id = @Id";
+
+                    connection.Execute(sql, new { Name = name, Id = id });
                 }
             }
             catch (Exception ex)
