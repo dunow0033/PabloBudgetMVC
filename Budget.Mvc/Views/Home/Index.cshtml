@@ -2,6 +2,8 @@
 
 <button id="addTransactionBtn">Add Transaction</button>
 <button id="addCategoryMvcBtn">Add Category MVC</button>
+<button id="manageCategoriesBtn">Manage Categories</button>
+<button id="backToTransactionsBtn" class="d-none">Back To Transactions List</button>
 
 
 <div id="addCategoryMvcModal" class="modal fade" tabindex="-1" role="dialog">
@@ -86,6 +88,41 @@
     </tbody>
 </table>
 
+<table id="categories" class="table d-none">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model.Categories)
+        {
+            <tr class="list-row">
+                <td class="d-none">
+                    @Html.DisplayFor(modelItem => category.Id)
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => category.Name)
+                </td>
+              
+                <td>
+                    <button type="button" class="btn btn-danger deleteTransactionBtn">
+                        Delete
+                    </button>
+
+                    <button type="button" class="btn btn-primary updateTransactionBtn">
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 @section scripts{
     <script>
         $("#addCategoryBtn").on("click", function () {
@@ -142,6 +179,28 @@
             $("#addTransactionModal").modal("show");
         });
 
+        $("#manageCategoriesBtn").on("click", function () {
+            console.log('clicked');
+            $("#categories").removeClass("d-none");
+            $("#backToTransactionsBtn").removeClass("d-none");
+            $("#records").addClass("d-none");
+            $("#addTransactionBtn").addClass("d-none");
+            $("#addCategoryMvcBtn").addClass("d-none");
+            $("#manageCategoriesBtn").addClass("d-none");
+        });
+
+        $("#backToTransactionsBtn").on("click", function () {
+            console.log('clicked');
+            $("#categories").addClass("d-none");
+            $("#backToTransactionsBtn").addClass("d-none");
+            $("#records").removeClass("d-none");
+            $("#addTransactionBtn").removeClass("d-none");
+            $("#addCategoryMvcBtn").removeClass("d-none");
+        });
+
+        
+
 
     </script>
 }
+
