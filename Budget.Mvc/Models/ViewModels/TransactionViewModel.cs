@@ -28,6 +28,13 @@ namespace Budget.Mvc.Models.ViewModels
 
         public Category Category { get; set;  }
         public Transaction Transaction { get; set; }
+
+        public SearchParameters? SearchParameters { get; set; }
+    }
+
+    public class SearchParameters
+    {
+        public int CategoryId { get; set; }
     }
 }
 

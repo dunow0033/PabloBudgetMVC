@@ -3,8 +3,8 @@
 <button id="addTransactionBtn">Add Transaction</button>
 <button id="addCategoryMvcBtn">Add Category MVC</button>
 <button id="manageCategoriesBtn">Manage Categories</button>
-<button id="backToTransactionsBtn" class="d-none">Back To Transactions List</button>
 
+<button id="backToTransactionsBtn" class="d-none">Back To Transactions List</button>
 
 <div id="addCategoryModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -29,6 +29,8 @@
         <partial name="DeleteCategory" />
     </div>
 </div>
+
+<partial name="FilterForm" />
 
 <table id="records" class="table">
     <thead>

@@ -1,4 +1,5 @@
 ﻿using Budget.Mvc.Models;
+using Budget.Mvc.Models.DTOs;
 using Budget.Mvc.Models.ViewModels;
 using Budget.Mvc.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -16,19 +17,25 @@ public class HomeController : Controller
         _budgetRepository = budgetRepository;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(TransactionViewModel? model)
     {
-        var transactions = _budgetRepository.GetTransactions();
+        var transactions = new List<TransactionWithCategory>();
+        if (model.SearchParameters == null)
+            transactions = _budgetRepository.GetTransactions();
+        else 
+            transactions = _budgetRepository.GetTransactions().Where(x => x.CategoryId == model.SearchParameters.CategoryId).ToList();
+
         var categories = _budgetRepository.GetCategories();
 
-        var model = new TransactionViewModel
+        var viewModel = new TransactionViewModel
         {
             Transactions = transactions,
             Categories = categories
         };
 
-        return View(model);
+        return View(viewModel);
     }
+
 
     [HttpPost]
     public IActionResult InsertCategory(TransactionViewModel model)
