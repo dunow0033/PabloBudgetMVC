@@ -1,9 +1,4 @@
-﻿//$(function() {
-//    $('.filter-button').height($(".filter-input").height() - 15);
-//    $('.filter-button').width($(".filter-input").height() - 15);
-//});
-
-$("#openCategoryModalBtn").on("click", function () {
+﻿$("#openCategoryModalBtn").on("click", function () {
     $("#addCategoryModal").modal("show");
 });
 
@@ -71,7 +66,6 @@ $(".openUpdateCategoryModalBtn").on("click", function () {
 });
 
 $("#manageCategoriesBtn").on("click", function () {
-    console.log('clicked');
     $("#categories").removeClass("d-none");
     $("#backToTransactionsBtn").removeClass("d-none");
     $("#records").addClass("d-none");
@@ -82,7 +76,6 @@ $("#manageCategoriesBtn").on("click", function () {
 });
 
 $("#backToTransactionsBtn").on("click", function () {
-    console.log('clicked');
     $("#categories").addClass("d-none");
     $("#backToTransactionsBtn").addClass("d-none");
     $("#records").removeClass("d-none");
@@ -90,4 +83,12 @@ $("#backToTransactionsBtn").on("click", function () {
     $("#openCategoryModalBtn").addClass("d-none");
     $("#manageCategoriesBtn").removeClass("d-none");
     $("#filter-area").removeClass("d-none");
+});
+
+$("#close-delete-category-modal").on("click", function () {
+    $("#deleteCategoryModal").modal("hide");
+});
+
+$("#close-delete-transaction-modal").on("click", function () {
+    $("#deleteTransactionModal").modal("hide");
 });

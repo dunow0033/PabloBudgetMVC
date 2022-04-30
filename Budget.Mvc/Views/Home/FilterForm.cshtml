@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="form-floating filter-input col-lg-4 col-md-4">
                     <select asp-for="SearchParameters.CategoryId" class="form-select" placeholder="Category">
-                        <option></option>
+                        <option value="0"></option>
                         @foreach (var category in Model.Categories)
                         {
                             <option value="@category.Id">@category.Name</option>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="col-lg-1 col-md-1 filter-button-wrapper">
-            <button type="submit" id="form-button" class="btn btn-success filter-button">
+            <button type="submit" class="btn btn-success filter-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
                     <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
                 </svg>

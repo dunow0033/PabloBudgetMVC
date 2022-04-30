@@ -17,7 +17,7 @@ body {
   margin-bottom: 60px;
 }
 
-.add-transaction-btn {
+.open-insert-modal-btn {
     display: block;
     height: 50px;
     width: 50px;
@@ -111,4 +111,18 @@ body {
 
 .transaction-input {
     margin-bottom: 15px;
+}
+
+.form-button {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.delete-confirmation-message {
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.delete-modal-container {
+    padding-top: 25px;
 }

@@ -1,4 +1,5 @@
 ﻿using Budget.Mvc.Models;
+using Budget.Mvc.Models.DTOs;
 using Budget.Mvc.Models.ViewModels;
 using Budget.Mvc.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +11,30 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IBudgetRepository _budgetRepository;
 
-    public HomeController(ILogger<HomeController> logger, IBudgetRepository budgetRepository )
+    public HomeController(ILogger<HomeController> logger, IBudgetRepository budgetRepository)
     {
         _logger = logger;
         _budgetRepository = budgetRepository;
     }
 
     public IActionResult Index(TransactionViewModel? model)
+    {
+        var transactions = FilterTransactions(model);
+
+        var categories = _budgetRepository.GetCategories();
+
+        var viewModel = new TransactionViewModel
+        {
+            Transactions = transactions,
+            Categories = categories
+        };
+
+        ModelState.Clear();
+
+        return View(viewModel);
+    }
+
+    private List<TransactionWithCategory> FilterTransactions(TransactionViewModel? model)
     {
         var transactions = _budgetRepository.GetTransactions();
 
@@ -38,18 +56,8 @@ public class HomeController : Controller
                      .Where(x => DateTime.Parse(x.Date) >= DateTime.Parse(model.SearchParameters.StartDate) && DateTime.Parse(x.Date) <= DateTime.Parse(model.SearchParameters.EndDate) && x.CategoryId == model.SearchParameters.CategoryId)
                      .ToList();
 
-
-        var categories = _budgetRepository.GetCategories();
-
-        var viewModel = new TransactionViewModel
-        {
-            Transactions = transactions,
-            Categories = categories
-        };
-
-        return View(viewModel);
+        return transactions;
     }
-
 
     [HttpPost]
     public IActionResult InsertCategory(TransactionViewModel model)
@@ -85,8 +93,8 @@ public class HomeController : Controller
 
     public IActionResult DeleteTransaction(int id)
     {
-       
-       _budgetRepository.DeleteTransaction(id);
+
+        _budgetRepository.DeleteTransaction(id);
 
         return RedirectToAction("Index");
     }
@@ -98,4 +106,17 @@ public class HomeController : Controller
 
         return RedirectToAction("Index");
     }
+
+    [AcceptVerbs("GET", "POST")]
+    public JsonResult IsUnique([Bind(Prefix = "Category.Name")] string name)
+    {
+        var categories = _budgetRepository.GetCategories();
+
+        if (categories.Any(x => x.Name == name))
+            return Json("Category already exists");
+
+        return Json(true);
+
+    }
+
 }
