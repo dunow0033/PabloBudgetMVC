@@ -1,4 +1,4 @@
-﻿@model Budget.Mvc.Models.ViewModels.TransactionViewModel
+﻿@model TransactionViewModel
 
 <div id="filter-area">
     <partial name="FilterForm" />
@@ -83,7 +83,7 @@
 </table>
 
 <table id="categories" class="table d-none">
-   
+
     <tbody>
         @foreach (var category in Model.Categories)
         {

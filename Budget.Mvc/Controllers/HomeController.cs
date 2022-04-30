@@ -8,12 +8,10 @@ namespace Budget.Mvc.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
     private readonly IBudgetRepository _budgetRepository;
 
-    public HomeController(ILogger<HomeController> logger, IBudgetRepository budgetRepository)
+    public HomeController(IBudgetRepository budgetRepository)
     {
-        _logger = logger;
         _budgetRepository = budgetRepository;
     }
 
@@ -32,31 +30,6 @@ public class HomeController : Controller
         ModelState.Clear();
 
         return View(viewModel);
-    }
-
-    private List<TransactionWithCategory> FilterTransactions(TransactionViewModel? model)
-    {
-        var transactions = _budgetRepository.GetTransactions();
-
-        if (model.SearchParameters == null)
-            transactions = transactions.ToList();
-
-        else if ((model.SearchParameters.CategoryId != 0 && model.SearchParameters.StartDate == null))
-            transactions = transactions
-                .Where(x => x.CategoryId == model.SearchParameters.CategoryId)
-                .ToList();
-
-        else if ((model.SearchParameters.CategoryId == 0 && model.SearchParameters.StartDate != null))
-            transactions = transactions
-                .Where(x => DateTime.Parse(x.Date) >= DateTime.Parse(model.SearchParameters.StartDate) && DateTime.Parse(x.Date) <= DateTime.Parse(model.SearchParameters.EndDate))
-                .ToList();
-
-        else if ((model.SearchParameters.CategoryId != 0 && model.SearchParameters.StartDate != null))
-            transactions = transactions
-                     .Where(x => DateTime.Parse(x.Date) >= DateTime.Parse(model.SearchParameters.StartDate) && DateTime.Parse(x.Date) <= DateTime.Parse(model.SearchParameters.EndDate) && x.CategoryId == model.SearchParameters.CategoryId)
-                     .ToList();
-
-        return transactions;
     }
 
     [HttpPost]
@@ -118,5 +91,36 @@ public class HomeController : Controller
         return Json(true);
 
     }
+
+    private List<TransactionWithCategory> FilterTransactions(TransactionViewModel? model)
+    {
+        var transactions = _budgetRepository.GetTransactions();
+
+        if (model.SearchParameters == null)
+            transactions = transactions.ToList();
+
+        else if ((model.SearchParameters.CategoryId != 0 && model.SearchParameters.StartDate == null))
+            transactions = transactions
+                .Where(x => x.CategoryId == model.SearchParameters.CategoryId)
+                .ToList();
+
+        else if ((model.SearchParameters.CategoryId == 0 && model.SearchParameters.StartDate != null))
+            transactions = transactions
+                .Where(x =>
+                DateTime.Parse(x.Date) >= DateTime.Parse(model.SearchParameters.StartDate) &&
+                DateTime.Parse(x.Date) <= DateTime.Parse(model.SearchParameters.EndDate))
+                .ToList();
+
+        else if ((model.SearchParameters.CategoryId != 0 && model.SearchParameters.StartDate != null))
+            transactions = transactions
+                     .Where(x =>
+                     DateTime.Parse(x.Date) >= DateTime.Parse(model.SearchParameters.StartDate) &&
+                     DateTime.Parse(x.Date) <= DateTime.Parse(model.SearchParameters.EndDate) &&
+                     x.CategoryId == model.SearchParameters.CategoryId)
+                     .ToList();
+
+        return transactions;
+    }
+
 
 }

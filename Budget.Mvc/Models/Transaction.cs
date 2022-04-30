@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-
+﻿
 namespace Budget.Mvc.Models.DTOs
 {
     public class TransactionWithCategory
@@ -9,8 +6,6 @@ namespace Budget.Mvc.Models.DTOs
         public int Id { get; set; }
         public string Date { get; set; }
         public string Amount { get; set; }
-
-        [Required]
         public string Name { get; set; }
         public string Category { get; set; }
         public int CategoryId { get; set; }

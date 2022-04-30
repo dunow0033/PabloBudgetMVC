@@ -6,7 +6,7 @@ using Microsoft.Data.Sqlite;
 
 namespace Budget.Mvc.Repositories
 {
-	public interface IBudgetRepository
+    public interface IBudgetRepository
     {
         List<Category> GetCategories();
         void AddCategory(string name);
@@ -20,76 +20,49 @@ namespace Budget.Mvc.Repositories
 
 
     }
-	public class BudgetRepository: IBudgetRepository
-	{
-		private readonly IConfiguration _configuration;
+    public class BudgetRepository : IBudgetRepository
+    {
+        private readonly IConfiguration _configuration;
 
-		public BudgetRepository(IConfiguration configuration)
-		{
-			_configuration = configuration;
-		}
+        public BudgetRepository(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public void AddCategory(string name)
         {
-            try
+            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
             {
-                using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-                {
-                    var sql = "INSERT INTO Category(Name) Values(@Name)";
-                    connection.Execute(sql, new { Name = name });
-                }
+                var sql = "INSERT INTO Category(Name) Values(@Name)";
+                connection.Execute(sql, new { Name = name });
             }
-            catch (Exception ex)
-            {
-                // do something;
-            }
+
         }
 
         public void AddTransaction(Transaction transaction)
         {
-            try
+            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
             {
-                using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-                {
-                    var sql = "INSERT INTO Transactions(Name, Date, Amount, TransactionType, CategoryId ) Values(@Name, @Date, @Amount, @TransactionType, @CategoryId )";
-                    connection.Execute(sql, transaction );
-                }
-            }
-            catch (Exception ex)
-            {
-                // do something;
+                var sql = "INSERT INTO Transactions(Name, Date, Amount, TransactionType, CategoryId ) Values(@Name, @Date, @Amount, @TransactionType, @CategoryId )";
+                connection.Execute(sql, transaction);
             }
         }
 
         public void DeleteTransaction(int id)
         {
-            try
+            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
             {
-                using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-                {
-                    var sql = "DELETE FROM Transactions WHERE Id = @id";
-                    connection.Execute(sql, new { id });
-                }
-            }
-            catch (Exception ex)
-            {
-                // do something;
+                var sql = "DELETE FROM Transactions WHERE Id = @id";
+                connection.Execute(sql, new { id });
             }
         }
 
         public void DeleteCategory(int id)
         {
-            try
+            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
             {
-                using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-                {
-                    var sql = "DELETE FROM Category WHERE Id = @id";
-                    connection.Execute(sql, new { id });
-                }
-            }
-            catch (Exception ex)
-            {
-                // do something;
+                var sql = "DELETE FROM Category WHERE Id = @id";
+                connection.Execute(sql, new { id });
             }
         }
 
@@ -123,39 +96,25 @@ namespace Budget.Mvc.Repositories
 
         public void UpdateTransaction(Transaction transaction)
         {
-            try
+            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
             {
-                using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-                {
-                    var sql =
-                        @"UPDATE Transactions
+                var sql =
+                    @"UPDATE Transactions
                           SET Date = @Date, Amount = @Amount, Name = @Name, CategoryId = @CategoryId, TransactionType = @TransactionType
                           WHERE Id = @Id";
 
-                    connection.Execute(sql, transaction );
-                }
-            }
-            catch (Exception ex)
-            {
-                // do something;
+                connection.Execute(sql, transaction);
             }
         }
 
         public void UpdateCategory(string name, int id)
         {
-            try
+            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
             {
-                using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-                {
-                    var sql =
-                        "UPDATE Category SET Name = @Name WHERE Id = @Id";
+                var sql =
+                    "UPDATE Category SET Name = @Name WHERE Id = @Id";
 
-                    connection.Execute(sql, new { Name = name, Id = id });
-                }
-            }
-            catch (Exception ex)
-            {
-                // do something;
+                connection.Execute(sql, new { Name = name, Id = id });
             }
         }
     }
