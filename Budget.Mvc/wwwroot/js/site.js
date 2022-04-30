@@ -1,4 +1,9 @@
-﻿$("#openCategoryModalBtn").on("click", function () {
+﻿$(function() {
+    $('.filter-button').height($(".filter-input").height() - 15);
+    $('.filter-button').width($(".filter-input").height() - 15);
+});
+
+$("#openCategoryModalBtn").on("click", function () {
     $("#addCategoryModal").modal("show");
 });
 
@@ -22,7 +27,6 @@ $("#addCategoryBtn").click(function () {
     var name = $("#Name").val();
     var modalSuccess = $("#addCategoryModalSuccess");
     var modalForm = $("#addCategoryForm")
-    console.log(name);
 
     $.ajax({
         url: 'Home/AddCategory',
@@ -34,19 +38,9 @@ $("#addCategoryBtn").click(function () {
         success: function (response) {
             modalSuccess.removeClass("d-none");
             modalForm.addClass("d-none");
-        },
-        failure: function (response) {
-            alert('failure');
-        },
-        error: function (response) {
-            alert('error');
         }
     });
 });
-
-//$("#closeCategoryModalBtn").click(function () {
-//    $("#addCategoryModal").modal("hide");
-//});
 
 $(".openUpdateTransactionModalBtn").on("click", function () {
     var id = $(this).closest('tr').find('td:first').html();
@@ -82,7 +76,7 @@ $("#manageCategoriesBtn").on("click", function () {
     $("#backToTransactionsBtn").removeClass("d-none");
     $("#records").addClass("d-none");
     $("#openTransactionModalBtn").addClass("d-none");
-    $("#openCategoryModalBtn").addClass("d-none");
+    $("#openCategoryModalBtn").removeClass("d-none");
     $("#manageCategoriesBtn").addClass("d-none");
     $("#filter-area").addClass("d-none");
 });
@@ -93,7 +87,7 @@ $("#backToTransactionsBtn").on("click", function () {
     $("#backToTransactionsBtn").addClass("d-none");
     $("#records").removeClass("d-none");
     $("#openTransactionModalBtn").removeClass("d-none");
-    $("#openCategoryModalBtn").removeClass("d-none");
+    $("#openCategoryModalBtn").addClass("d-none");
     $("#manageCategoriesBtn").removeClass("d-none");
     $("#filter-area").removeClass("d-none");
 });

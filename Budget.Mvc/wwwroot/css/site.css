@@ -34,8 +34,66 @@ body {
 
 .buttons-cell {
     text-align: end;
+    vertical-align: middle;
 }
 
 .form-label {
     padding-left: 20px !important;
+}
+
+.filter-button-wrapper {
+    margin-left: -20px;
+}
+
+.transaction-cell {
+    display: block;
+}
+
+.transaction-name {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: -30px;
+}
+
+.transaction-date {
+    font-size: 13px;
+    font-weight: 800;
+    color: blue;
+    margin-bottom: -30px;
+}
+
+.transaction-type-income {
+    font-size: 13px;
+    font-weight: 800;
+    color: green;
+}
+
+.transaction-type-expense {
+    font-size: 13px;
+    font-weight: 800;
+    color: red;
+}
+
+.transaction-category {
+    vertical-align: middle;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.transaction-amount-income {
+    font-size: 22px;
+    font-weight: 800;
+    color: green;
+    vertical-align: middle;
+}
+
+.transaction-amount-expense {
+    font-size: 22px;
+    font-weight: 800;
+    color: red;
+    vertical-align: middle;
+}
+
+.transaction-amount {
+    vertical-align: middle;
 }

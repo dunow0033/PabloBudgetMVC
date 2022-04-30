@@ -9,6 +9,8 @@ namespace Budget.Mvc.Models.ViewModels
         public int Id { get; set; }
 
         [Required]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM}", ApplyFormatInEditMode = false)]
         public string Date { get; set; }
 
         [Required]
@@ -38,13 +40,13 @@ namespace Budget.Mvc.Models.ViewModels
     public class SearchParameters
     {
         [DisplayName("Category")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         [DisplayName("Start Date")]
-        public string StartDate { get; set; }
+        public string? StartDate { get; set; }
 
         [DisplayName("End Date")]
-        public string EndDate { get; set; }
+        public string? EndDate { get; set; }
     }
 }
 

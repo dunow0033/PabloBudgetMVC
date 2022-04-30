@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-using Budget.Mvc.Models;
-using Budget.Mvc.Models.DTOs;
+﻿using Budget.Mvc.Models;
 using Budget.Mvc.Models.ViewModels;
 using Budget.Mvc.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +18,8 @@ public class HomeController : Controller
 
     public IActionResult Index(TransactionViewModel? model)
     {
-        var startDate = DateTime.Parse("2022-03-04");
-
         var transactions = _budgetRepository.GetTransactions();
+
         if (model.SearchParameters == null)
             transactions = transactions.ToList();
 
