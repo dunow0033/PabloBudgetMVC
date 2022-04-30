@@ -16,3 +16,26 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.add-transaction-btn {
+    display: block;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.container-nav {
+    margin: 0 200px;
+}
+
+.container-body {
+    padding: 0 200px;
+}
+
+.buttons-cell {
+    text-align: end;
+}
+
+.form-label {
+    padding-left: 20px !important;
+}

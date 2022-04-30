@@ -51,7 +51,7 @@ namespace Budget.Mvc.Repositories
             {
                 using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
                 {
-                    var sql = "INSERT INTO Transactions(Name, Date, TransactionType, CategoryId ) Values(@Name, @Date, @TransactionType, @CategoryId )";
+                    var sql = "INSERT INTO Transactions(Name, Date, Amount, TransactionType, CategoryId ) Values(@Name, @Date, @Amount, @TransactionType, @CategoryId )";
                     connection.Execute(sql, transaction );
                 }
             }

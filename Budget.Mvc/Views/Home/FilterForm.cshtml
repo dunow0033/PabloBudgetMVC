@@ -1,41 +1,31 @@
 ﻿@model Budget.Mvc.Models.ViewModels.TransactionViewModel
-<div class="modal-content">
-
-    <form asp-action="Index" method="post" class="form-horizontal" role="form">
-
-        <div class="form-group">
-            <label asp-for="SearchParameters.CategoryId" class="control-label"></label>
-            <select asp-for="SearchParameters.CategoryId" class="form-control">
-                <option>Select Category</option>
+<form asp-action="Index" method="post" class="form-horizontal" role="form">
+    <div class="row">
+        <div class="form-floating col-lg-3 col-md-3">
+            <select asp-for="SearchParameters.CategoryId" class="form-select" placeholder="Category">
+                <option></option>
                 @foreach (var category in Model.Categories)
                 {
                     <option value="@category.Id">@category.Name</option>
                 }
             </select>
+            <label asp-for="SearchParameters.CategoryId" class="form-label">Category</label>
             <span asp-validation-for="CategoryId" class="text-danger"></span>
         </div>
 
-        <div class="row justify-content-center">
-            <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10">
-                <label asp-for="SearchParameters.StartDate" class="form-label"></label>
-                <input type="Date" asp-for="SearchParameters.StartDate" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
+        <div class="form-floating col-lg-3 col-md-3">
+            <input type="text" asp-for="SearchParameters.StartDate" onfocus="(this.type='date')" class="form-control"/>
+            <label asp-for="SearchParameters.StartDate" class="form-label"></label>
+            <span asp-validation-for="SearchParameters.StartDate" class="text-danger"></span>
+        </div>
+        <div class="form-floating col-lg-3 col-md-3">
+            <input type="text" asp-for="SearchParameters.EndDate" onfocus="(this.type='date')" class="form-control"/>
+            <label asp-for="SearchParameters.EndDate" class="form-label"></label>
+            <span asp-validation-for="SearchParameters.EndDate" class="text-danger"></span>
         </div>
 
-        <div class="row justify-content-center">
-            <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10">
-                <label asp-for="SearchParameters.EndDate" class="form-label"></label>
-                <input type="Date" asp-for="SearchParameters.EndDate" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
+        <div class="col-lg-3 col-md-3">
+            <button type="submit" id="form-button" class="btn btn-success">Filter</button>
         </div>
-
-        <div class="row justify-content-center">
-            <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10 mt-3 mb-5">
-                <button type="submit" id="form-button" class="btn btn-success">Filter</button>
-            </div>
-        </div>
-
-    </form>
-</div>
+    </div>
+</form>

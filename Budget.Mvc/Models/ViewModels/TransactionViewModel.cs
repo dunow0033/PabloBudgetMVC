@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Budget.Mvc.Models.DTOs;
 
 namespace Budget.Mvc.Models.ViewModels
@@ -17,9 +18,11 @@ namespace Budget.Mvc.Models.ViewModels
         public string Name { get; set; }
 
         [Required]
+        [DisplayName("Category")]
         public int CategoryId { get; set; }
 
         [Required]
+        [DisplayName("Type")]
         public TransactionType TransactionType { get; set; }
 
         public List<Category>? Categories { get; set; }
@@ -34,8 +37,13 @@ namespace Budget.Mvc.Models.ViewModels
 
     public class SearchParameters
     {
+        [DisplayName("Category")]
         public int CategoryId { get; set; }
+
+        [DisplayName("Start Date")]
         public string StartDate { get; set; }
+
+        [DisplayName("End Date")]
         public string EndDate { get; set; }
     }
 }
