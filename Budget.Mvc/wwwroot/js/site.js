@@ -1,7 +1,7 @@
-﻿$(function() {
-    $('.filter-button').height($(".filter-input").height() - 15);
-    $('.filter-button').width($(".filter-input").height() - 15);
-});
+﻿//$(function() {
+//    $('.filter-button').height($(".filter-input").height() - 15);
+//    $('.filter-button').width($(".filter-input").height() - 15);
+//});
 
 $("#openCategoryModalBtn").on("click", function () {
     $("#addCategoryModal").modal("show");

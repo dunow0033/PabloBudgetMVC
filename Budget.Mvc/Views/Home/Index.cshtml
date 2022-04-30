@@ -6,21 +6,6 @@
 
 
 <table id="records" class="table">
-    <thead>
-        <tr>
-            <th>
-                Transaction
-            </th>
-            <th>
-                Amount
-            </th>
-            <th>
-                Category
-            </th>
-           
-            <th></th>
-        </tr>
-    </thead>
     <tbody>
         @foreach (var transaction in Model.Transactions)
         {
@@ -98,14 +83,7 @@
 </table>
 
 <table id="categories" class="table d-none">
-    <thead>
-        <tr>
-            <th>
-                PORRA????????????????
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+   
     <tbody>
         @foreach (var category in Model.Categories)
         {
@@ -114,7 +92,7 @@
                     @Html.DisplayFor(modelItem => category.Id)
                 </td>
 
-                <td>
+                <td class="transaction-name">
                     @Html.DisplayFor(modelItem => category.Name)
                 </td>
 
