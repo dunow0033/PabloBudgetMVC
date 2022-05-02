@@ -1,5 +1,4 @@
 ﻿using Budget.Mvc.Models;
-using Budget.Mvc.Models.DTOs;
 using Budget.Mvc.Models.ViewModels;
 using Budget.Mvc.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -15,16 +14,18 @@ public class HomeController : Controller
         _budgetRepository = budgetRepository;
     }
 
-    public IActionResult Index(TransactionViewModel? model)
+    public IActionResult Index(BudgetViewModel? model)
     {
         var transactions = FilterTransactions(model);
 
         var categories = _budgetRepository.GetCategories();
 
-        var viewModel = new TransactionViewModel
+        var viewModel = new BudgetViewModel
         {
             Transactions = transactions,
-            Categories = categories
+            Categories = new CategoriesViewModel { Categories = categories },
+            InsertTransaction = new InsertTransactionViewModel { Categories = categories },
+            FilterParameters = new FilterParametersViewModel { Categories = categories }
         };
 
         ModelState.Clear();
@@ -33,27 +34,27 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult InsertCategory(TransactionViewModel model)
+    public IActionResult InsertCategory(BudgetViewModel model)
     {
-        if (model.Category.Id > 0)
-            _budgetRepository.UpdateCategory(model.Category.Name, model.Category.Id);
+        if (model.InsertCategory.Id > 0)
+            _budgetRepository.UpdateCategory(model.InsertCategory.Name, model.InsertCategory.Id);
         else
-            _budgetRepository.AddCategory(model.Category.Name);
+            _budgetRepository.AddCategory(model.InsertCategory.Name);
 
         return RedirectToAction("Index");
     }
 
     [HttpPost]
-    public IActionResult InsertTransaction(TransactionViewModel model)
+    public IActionResult InsertTransaction(BudgetViewModel model)
     {
         var transaction = new Transaction
         {
-            Id = model.Id,
-            Amount = model.Amount,
-            Name = model.Name,
-            Date = model.Date,
-            TransactionType = model.TransactionType,
-            CategoryId = model.CategoryId
+            Id = model.InsertTransaction.Id,
+            Amount = model.InsertTransaction.Amount,
+            Name = model.InsertTransaction.Name,
+            Date = model.InsertTransaction.Date,
+            TransactionType = model.InsertTransaction.TransactionType,
+            CategoryId = model.InsertTransaction.CategoryId
         };
 
         if (transaction.Id > 0)
@@ -92,31 +93,31 @@ public class HomeController : Controller
 
     }
 
-    private List<TransactionWithCategory> FilterTransactions(TransactionViewModel? model)
+    private List<Transaction> FilterTransactions(BudgetViewModel? model)
     {
         var transactions = _budgetRepository.GetTransactions();
 
-        if (model.SearchParameters == null)
+        if (model.FilterParameters == null)
             transactions = transactions.ToList();
 
-        else if ((model.SearchParameters.CategoryId != 0 && model.SearchParameters.StartDate == null))
+        else if ((model.FilterParameters.CategoryId != 0 && model.FilterParameters.StartDate == null))
             transactions = transactions
-                .Where(x => x.CategoryId == model.SearchParameters.CategoryId)
+                .Where(x => x.CategoryId == model.FilterParameters.CategoryId)
                 .ToList();
 
-        else if ((model.SearchParameters.CategoryId == 0 && model.SearchParameters.StartDate != null))
+        else if ((model.FilterParameters.CategoryId == 0 && model.FilterParameters.StartDate != null))
             transactions = transactions
                 .Where(x =>
-                DateTime.Parse(x.Date) >= DateTime.Parse(model.SearchParameters.StartDate) &&
-                DateTime.Parse(x.Date) <= DateTime.Parse(model.SearchParameters.EndDate))
+                DateTime.Parse(x.Date) >= DateTime.Parse(model.FilterParameters.StartDate) &&
+                DateTime.Parse(x.Date) <= DateTime.Parse(model.FilterParameters.EndDate))
                 .ToList();
 
-        else if ((model.SearchParameters.CategoryId != 0 && model.SearchParameters.StartDate != null))
+        else if ((model.FilterParameters.CategoryId != 0 && model.FilterParameters.StartDate != null))
             transactions = transactions
                      .Where(x =>
-                     DateTime.Parse(x.Date) >= DateTime.Parse(model.SearchParameters.StartDate) &&
-                     DateTime.Parse(x.Date) <= DateTime.Parse(model.SearchParameters.EndDate) &&
-                     x.CategoryId == model.SearchParameters.CategoryId)
+                     DateTime.Parse(x.Date) >= DateTime.Parse(model.FilterParameters.StartDate) &&
+                     DateTime.Parse(x.Date) <= DateTime.Parse(model.FilterParameters.EndDate) &&
+                     x.CategoryId == model.FilterParameters.CategoryId)
                      .ToList();
 
         return transactions;

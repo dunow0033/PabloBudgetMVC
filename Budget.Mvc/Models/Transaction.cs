@@ -1,7 +1,8 @@
-﻿
-namespace Budget.Mvc.Models.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Budget.Mvc.Models
 {
-    public class TransactionWithCategory
+    public class Transaction
     {
         public int Id { get; set; }
         public string Date { get; set; }
@@ -11,5 +12,15 @@ namespace Budget.Mvc.Models.DTOs
         public int CategoryId { get; set; }
         public TransactionType TransactionType { get; set; }
     }
+
+    public enum TransactionType
+    {
+        [Display(Name = "Income")]
+        Income = 1,
+
+        [Display(Name = "Expense")]
+        Expense = 2
+    }
 }
+
 
