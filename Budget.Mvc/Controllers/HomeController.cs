@@ -82,7 +82,7 @@ public class HomeController : Controller
     }
 
     [AcceptVerbs("GET", "POST")]
-    public JsonResult IsUnique([Bind(Prefix = "Category.Name")] string name)
+    public JsonResult IsUnique([Bind(Prefix = "InsertCategory.Name")] string name)
     {
         var categories = _budgetRepository.GetCategories();
 
