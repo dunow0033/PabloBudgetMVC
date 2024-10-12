@@ -8,12 +8,12 @@ namespace Budget.Mvc.Repositories
 {
     public interface IBudgetRepository
     {
-        List<Category> GetCategories();
+        Task<List<Category>> GetCategories();
         void AddCategory(string name);
         void DeleteCategory(int id);
         void UpdateCategory(string name, int id);
 
-        List<Transaction> GetTransactions();
+        Task<List<Transaction>> GetTransactions();
         void AddTransaction(Transaction transaction);
         void DeleteTransaction(int id);
         void UpdateTransaction(Transaction transaction);

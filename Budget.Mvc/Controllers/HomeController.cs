@@ -14,15 +14,15 @@ public class HomeController : Controller
         _budgetRepository = budgetRepository;
     }
 
-    public IActionResult Index(BudgetViewModel? model)
+    public async Task<IActionResult> Index(BudgetViewModel? model)
     {
-        var transactions = FilterTransactions(model);
+        //var transactions = FilterTransactions(model);
 
-        var categories = _budgetRepository.GetCategories();
+        var categories = await _budgetRepository.GetCategories();
 
         var viewModel = new BudgetViewModel
         {
-            Transactions = transactions,
+            //Transactions = transactions,
             Categories = new CategoriesViewModel { Categories = categories },
             InsertTransaction = new InsertTransactionViewModel { Categories = categories },
             FilterParameters = new FilterParametersViewModel { Categories = categories }
@@ -81,47 +81,47 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
 
-    [AcceptVerbs("GET", "POST")]
-    public JsonResult IsUnique([Bind(Prefix = "InsertCategory.Name")] string name)
-    {
-        var categories = _budgetRepository.GetCategories();
+    //[AcceptVerbs("GET", "POST")]
+    //public JsonResult IsUnique([Bind(Prefix = "InsertCategory.Name")] string name)
+    //{
+    //    var categories = _budgetRepository.GetCategories();
 
-        if (categories.Any(x => x.Name == name))
-            return Json("Category already exists");
+    //    if (categories.Any(x => x.Name == name))
+    //        return Json("Category already exists");
 
-        return Json(true);
+    //    return Json(true);
 
-    }
+    //}
 
-    private List<Transaction> FilterTransactions(BudgetViewModel? model)
-    {
-        var transactions = _budgetRepository.GetTransactions();
+    //private List<Transaction> FilterTransactions(BudgetViewModel? model)
+    //{
+    //    var transactions = _budgetRepository.GetTransactions();
 
-        if (model.FilterParameters == null)
-            transactions = transactions.ToList();
+    //    if (model.FilterParameters == null)
+    //        transactions = transactions.ToList();
 
-        else if ((model.FilterParameters.CategoryId != 0 && model.FilterParameters.StartDate == null))
-            transactions = transactions
-                .Where(x => x.CategoryId == model.FilterParameters.CategoryId)
-                .ToList();
+    //    else if ((model.FilterParameters.CategoryId != 0 && model.FilterParameters.StartDate == null))
+    //        transactions = transactions
+    //            .Where(x => x.CategoryId == model.FilterParameters.CategoryId)
+    //            .ToList();
 
-        else if ((model.FilterParameters.CategoryId == 0 && model.FilterParameters.StartDate != null))
-            transactions = transactions
-                .Where(x =>
-                DateTime.Parse(x.Date) >= DateTime.Parse(model.FilterParameters.StartDate) &&
-                DateTime.Parse(x.Date) <= DateTime.Parse(model.FilterParameters.EndDate))
-                .ToList();
+    //    else if ((model.FilterParameters.CategoryId == 0 && model.FilterParameters.StartDate != null))
+    //        transactions = transactions
+    //            .Where(x =>
+    //            DateTime.Parse(x.Date) >= DateTime.Parse(model.FilterParameters.StartDate) &&
+    //            DateTime.Parse(x.Date) <= DateTime.Parse(model.FilterParameters.EndDate))
+    //            .ToList();
 
-        else if ((model.FilterParameters.CategoryId != 0 && model.FilterParameters.StartDate != null))
-            transactions = transactions
-                     .Where(x =>
-                     DateTime.Parse(x.Date) >= DateTime.Parse(model.FilterParameters.StartDate) &&
-                     DateTime.Parse(x.Date) <= DateTime.Parse(model.FilterParameters.EndDate) &&
-                     x.CategoryId == model.FilterParameters.CategoryId)
-                     .ToList();
+    //    else if ((model.FilterParameters.CategoryId != 0 && model.FilterParameters.StartDate != null))
+    //        transactions = transactions
+    //                 .Where(x =>
+    //                 DateTime.Parse(x.Date) >= DateTime.Parse(model.FilterParameters.StartDate) &&
+    //                 DateTime.Parse(x.Date) <= DateTime.Parse(model.FilterParameters.EndDate) &&
+    //                 x.CategoryId == model.FilterParameters.CategoryId)
+    //                 .ToList();
 
-        return transactions;
-    }
+    //    return transactions;
+    //}
 
 
 }
