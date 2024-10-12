@@ -1,7 +1,8 @@
 ﻿using System.Data;
+using Budget.Mvc.Data;
 using Budget.Mvc.Models;
 using Dapper;
-using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 
 namespace Budget.Mvc.Repositories
 {
@@ -21,100 +22,96 @@ namespace Budget.Mvc.Repositories
     }
     public class BudgetRepository : IBudgetRepository
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration configuration;
+        private readonly BudgetDbContext budgetDbContext;
 
-        public BudgetRepository(IConfiguration configuration)
+        public BudgetRepository(BudgetDbContext budgetDbContext, IConfiguration configuration)
         {
-            _configuration = configuration;
+            this.budgetDbContext = budgetDbContext;
+            this.configuration = configuration;
         }
 
         public void AddCategory(string name)
         {
-            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-            {
-                var sql = "INSERT INTO Category(Name) Values(@Name)";
-                connection.Execute(sql, new { Name = name });
-            }
+            //using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+            //{
+            //    var sql = "INSERT INTO Category(Name) Values(@Name)";
+            //    connection.Execute(sql, new { Name = name });
+            //}
 
         }
 
         public void AddTransaction(Transaction transaction)
         {
-            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-            {
-                var sql = "INSERT INTO Transactions(Name, Date, Amount, TransactionType, CategoryId ) Values(@Name, @Date, @Amount, @TransactionType, @CategoryId )";
-                connection.Execute(sql, transaction);
-            }
+            //using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+            //{
+            //    var sql = "INSERT INTO Transactions(Name, Date, Amount, TransactionType, CategoryId ) Values(@Name, @Date, @Amount, @TransactionType, @CategoryId )";
+            //    connection.Execute(sql, transaction);
+            //}
         }
 
         public void DeleteTransaction(int id)
         {
-            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-            {
-                var sql = "DELETE FROM Transactions WHERE Id = @id";
-                connection.Execute(sql, new { id });
-            }
+            //using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+            //{
+            //    var sql = "DELETE FROM Transactions WHERE Id = @id";
+            //    connection.Execute(sql, new { id });
+            //}
         }
 
         public void DeleteCategory(int id)
         {
-            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-            {
-                var sql = "DELETE FROM Category WHERE Id = @id";
-                connection.Execute(sql, new { id });
-            }
+            //using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+            //{
+            //    var sql = "DELETE FROM Category WHERE Id = @id";
+            //    connection.Execute(sql, new { id });
+            //}
         }
 
-        public List<Category> GetCategories()
+        public async Task<List<Category>> GetCategories()
         {
-            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-            {
-                var query = @"SELECT * FROM Category";
-
-                var categories = connection.Query<Category>(query).ToList();
-
-                return categories;
-            }
+            return await budgetDbContext.Categories.ToListAsync();
         }
 
         public List<Transaction> GetTransactions()
         {
-            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-            {
-                var query =
-                    @"SELECT t.Amount, t.CategoryId, t.[Date], t.Id, t.TransactionType, t.Name, c.Name AS Category
-                      FROM Transactions AS t
-                      LEFT JOIN Category AS c
-                      ON t.CategoryId = c.Id;";
+            //using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+            //{
+            //    var query =
+            //        @"SELECT t.Amount, t.CategoryId, t.[Date], t.Id, t.TransactionType, t.Name, c.Name AS Category
+            //          FROM Transactions AS t
+            //          LEFT JOIN Category AS c
+            //          ON t.CategoryId = c.Id;";
 
-                var allTransactions = connection.Query<Transaction>(query);
+            //    var allTransactions = connection.Query<Transaction>(query);
 
-                return allTransactions.ToList();
-            }
+            //    return allTransactions.ToList();
+            //}
+            return null;
         }
 
         public void UpdateTransaction(Transaction transaction)
         {
-            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-            {
-                var sql =
-                    @"UPDATE Transactions
-                          SET Date = @Date, Amount = @Amount, Name = @Name, CategoryId = @CategoryId, TransactionType = @TransactionType
-                          WHERE Id = @Id";
+            //using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+            //{
+            //    var sql =
+            //        @"UPDATE Transactions
+            //              SET Date = @Date, Amount = @Amount, Name = @Name, CategoryId = @CategoryId, TransactionType = @TransactionType
+            //              WHERE Id = @Id";
 
-                connection.Execute(sql, transaction);
-            }
+            //    connection.Execute(sql, transaction);
+            //}
         }
 
         public void UpdateCategory(string name, int id)
         {
-            using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
-            {
-                var sql =
-                    "UPDATE Category SET Name = @Name WHERE Id = @Id";
+            //using (IDbConnection connection = new SqliteConnection(_configuration.GetConnectionString("ConnectionString")))
+            //{
+            //    var sql =
+            //        "UPDATE Category SET Name = @Name WHERE Id = @Id";
 
-                connection.Execute(sql, new { Name = name, Id = id });
-            }
+            //    connection.Execute(sql, new { Name = name, Id = id });
+            //}
         }
     }
 }

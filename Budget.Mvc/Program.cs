@@ -1,10 +1,15 @@
-﻿using Budget.Mvc.Repositories;
+﻿using Budget.Mvc.Data;
+using Budget.Mvc.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
+
+builder.Services.AddDbContext<BudgetDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("BudgetConnection")));
 
 var app = builder.Build();
 
